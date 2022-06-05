@@ -126,17 +126,12 @@ void colorBlinkersLeft(uint32_t c, int wait){
 
 
 void stopStop(){
-//  colorStopLeft(strip_left.Color(255, 0, 0), 2000);
-//  colorStopLeft(strip_right.Color(255, 0, 0), 2000);
-//  colorStopBack(strip_left.Color(255, 0, 0), 2000);
-
-  
   colorStop(strip_left.Color(255, 0, 0), 2000);
 }
 void colorStop(uint32_t c, int wait){
   for(int i = 0; i<=28; i++){
     strip_left.setPixelColor(i, c);
-    strip_left.setPixelColor(i, c);
+    strip_right.setPixelColor(i, c);
   }
   for(int i = 0; i<=31; i++){
     strip_back.setPixelColor(i, c);
