@@ -6,8 +6,8 @@ int Some_specific_Angle_at_which_one_turns=30;
 int Gyrovalue;
 int Accvalue;
 
-int RX_PIN=;
-int TX_PIN=;
+int RX_PIN=0;
+int TX_PIN=1;
 
 #include<SoftwareSerial.h>
 
