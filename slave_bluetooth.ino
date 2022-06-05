@@ -1,8 +1,3 @@
-int MAX_GYROSCOPE_TILT_VALUE_po = 5000; //I'm assuming that both are like positive and negative, else we can shift them ig.
-int MAX_GYROSCOPE_TILT_VALUE_ne = -5000;
-int GYROSCOPE_ZERO=0;
-int Some_specific_Angle_at_which_one_turns=30;
-
 #include <Adafruit_NeoPixel.h>
 #ifdef __AVR__
 #include <avr/power.h>
