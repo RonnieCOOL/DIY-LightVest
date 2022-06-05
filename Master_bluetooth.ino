@@ -24,7 +24,7 @@ int Accvalue;
 int RX_PIN=0;
 int TX_PIN=1;
 
-#include<SoftwareSerial.h()<<8 |>
+#include<SoftwareSerial.h>
 
 SoftwareSerial Master_BTDevice(RX_PIN,TX_PIN);
 
@@ -51,7 +51,7 @@ Wire.beginTransmission(MPU_ADDR);
   Wire.requestFrom(MPU_ADDR, 7*2, true); // request a total of 7*2=14 registers
   
   // "Wire.read()<<8 | Wire.read();" means two registers are read and stored in the same variable
-  accelerometer_x = Wire.read Wire.read(); // reading registers: 0x3B (ACCEL_XOUT_H) and 0x3C (ACCEL_XOUT_L)
+  accelerometer_x = Wire.read()<<8 | Wire.read(); // reading registers: 0x3B (ACCEL_XOUT_H) and 0x3C (ACCEL_XOUT_L)
   accelerometer_y = Wire.read()<<8 | Wire.read(); // reading registers: 0x3D (ACCEL_YOUT_H) and 0x3E (ACCEL_YOUT_L)
   accelerometer_z = Wire.read()<<8 | Wire.read(); // reading registers: 0x3F (ACCEL_ZOUT_H) and 0x40 (ACCEL_ZOUT_L)
   temperature = Wire.read()<<8 | Wire.read(); // reading registers: 0x41 (TEMP_OUT_H) and 0x42 (TEMP_OUT_L)
