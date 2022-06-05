@@ -3,8 +3,8 @@ int MAX_GYROSCOPE_TILT_VALUE_ne = -5000;
 int GYROSCOPE_ZERO=0;
 int Some_specific_Angle_at_which_one_turns=30;
 
-
 int Gyrovalue;
+int Accvalue;
 
 int RX_PIN=;
 int TX_PIN=;
@@ -30,7 +30,11 @@ void loop() {
 
 
 
-
+if(Accvalue<0)
+{
+  flag_turns_master=2;
+  Master_BTDevice.print(2);
+}
 
 Gyrovalue=(Gyrovalue-GYROSCOPE_ZERO)*180/(MAX_GYROSCOPE_TILT_VALUE_po-MAX_GYROSCOPE_TILT_VALUE_ne);
 if(Gyrovalue>Some_specific_Angle_at_which_one_turns)
