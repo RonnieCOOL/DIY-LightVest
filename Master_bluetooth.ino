@@ -72,7 +72,7 @@ Wire.beginTransmission(MPU_ADDR);
   // delay
   delay(1000);
   Gyrovalue=gyro_z;
-  Accvalue=accelerometer_z;
+  Accvalue=accelerometer_x;
   
 if(Accvalue<0)
 {
