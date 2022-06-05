@@ -110,7 +110,7 @@ void stopStop(){
 void colorStop(uint32_t c, int wait){
   for(int i = 0; i<=28; i++){
     strip_left.setPixelColor(i, c);
-    strip_left.setPixelColor(i, c);
+    strip_right.setPixelColor(i, c);
   }
   for(int i = 0; i<=31; i++){
     strip_back.setPixelColor(i, c);
