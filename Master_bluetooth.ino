@@ -84,7 +84,7 @@ Gyrovalue=(Gyrovalue-GYROSCOPE_ZERO)*180/(MAX_GYROSCOPE_TILT_VALUE_po-MAX_GYROSC
 if(Gyrovalue>Some_specific_Angle_at_which_one_turns)
 {
   flag_turns_master=1;    
-  Master_BTDevice.println(1);
+  Master_BTDevice.print(1);
 }
 else if(Gyrovalue<-Some_specific_Angle_at_which_one_turns)
 {
