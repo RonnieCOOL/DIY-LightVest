@@ -72,6 +72,7 @@ void loop()
   delay(3000);
     
   }
+}
 
   void rightBlink() {
   for (int i = 0; i < 4; i++){
@@ -148,8 +149,4 @@ void colorStop(uint32_t c, int wait){
   strip_left.clear();
   strip_right.clear();
   strip_back.clear();
-}
-
-  
-  
 }
