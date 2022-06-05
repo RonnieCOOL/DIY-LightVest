@@ -18,7 +18,7 @@ int flag_turns_master;//Left=-1.Right=1.Nothing=0
 void setup() 
 {
   Serial.begin(9600);
-  Master_GyroDevice.begin(38400);
+  Master_BTDevice.begin(38400);
 }
 
 void loop() {
