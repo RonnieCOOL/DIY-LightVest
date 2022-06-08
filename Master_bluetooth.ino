@@ -1,22 +1,15 @@
-#include "Wire.h" // This library allows you to communicate with I2C devices.
+#define x A0
+#define y A1
+#define z A2
 
-const int MPU_ADDR = 0x68; // I2C address of the MPU-6050. If AD0 pin is set to HIGH, the I2C address will be 0x69.
-
-int16_t accelerometer_x, accelerometer_y, accelerometer_z; // variables for accelerometer raw data
-int16_t gyro_x, gyro_y, gyro_z; // variables for gyro raw data
-int16_t temperature; // variables for temperature data
-
-char tmp_str[7]; // temporary variable used in convert function
-
-char* convert_int16_to_str(int16_t i) { // converts int16 to string. Moreover, resulting strings will have the same length in the debug monitor.
-  sprintf(tmp_str, "%6d", i);
-  return tmp_str;
-  }
-
-int MAX_GYROSCOPE_TILT_VALUE_po = 5000; //I'm assuming that both are like positive(right) and negative(left), else we can shift them ig.
-int MAX_GYROSCOPE_TILT_VALUE_ne = -5000;
-int GYROSCOPE_ZERO=0;
 int Some_specific_Angle_at_which_one_turns=30;
+int x_val;
+int y_val;
+int z_val;
+
+int x_val2=0;//intitialise these values
+int y_val2=0;
+int z_val2=0;
 
 int Gyrovalue;
 int Accvalue;
@@ -32,47 +25,44 @@ int flag_turns_master;//Left=-1.Right=1.Nothing=0
 
 void setup() 
 {
+  pinMode(x, INPUT);
+  pinMode(y, INPUT);
+  pinMode(z, INPUT);
   Serial.begin(9600);
-  
-  Wire.begin();
-  Wire.beginTransmission(MPU_ADDR); // Begins a transmission to the I2C slave (GY-521 board)
-  Wire.write(0x6B); // PWR_MGMT_1 register
-  Wire.write(0); // set to zero (wakes up the MPU-6050)
-  Wire.endTransmission(true);
-  
+   
   Master_BTDevice.begin(38400);
 }
 
 void loop() {
 
-Wire.beginTransmission(MPU_ADDR);
-  Wire.write(0x3B); // starting with register 0x3B (ACCEL_XOUT_H) 
-  Wire.endTransmission(false); // the parameter indicates that the Arduino will send a restart. As a result, the connection is kept active.
-  Wire.requestFrom(MPU_ADDR, 7*2, true); // request a total of 7*2=14 registers
+
+   x_val = analogRead(x);
+  y_val = analogRead(y);
+  z_val = analogRead(z);
+
+  int x_axis = x_val - x_val2;
+  int y_axis = y_val - y_val2;
+  int z_axis = z_val - z_val2;
+
+  int x_g_value = ( ( ( (double)(x_axis * 5)/1024) - 1.65 ) / 0.330 ); 
+  int y_g_value = ( ( ( (double)(y_axis * 5)/1024) - 1.65 ) / 0.330 );  
+  int z_g_value = ( ( ( (double)(z_axis * 5)/1024) - 1.80 ) / 0.330 );
+
+  int roll = ( ( (atan2(y_g_value,z_g_value) * 180) / 3.14 ) + 180 ); 
+  int pitch = ( ( (atan2(z_g_value,x_g_value) * 180) / 3.14 ) + 180 );
   
-  // "Wire.read()<<8 | Wire.read();" means two registers are read and stored in the same variable
-  accelerometer_x = Wire.read()<<8 | Wire.read(); // reading registers: 0x3B (ACCEL_XOUT_H) and 0x3C (ACCEL_XOUT_L)
-  accelerometer_y = Wire.read()<<8 | Wire.read(); // reading registers: 0x3D (ACCEL_YOUT_H) and 0x3E (ACCEL_YOUT_L)
-  accelerometer_z = Wire.read()<<8 | Wire.read(); // reading registers: 0x3F (ACCEL_ZOUT_H) and 0x40 (ACCEL_ZOUT_L)
-  temperature = Wire.read()<<8 | Wire.read(); // reading registers: 0x41 (TEMP_OUT_H) and 0x42 (TEMP_OUT_L)
-  gyro_x = Wire.read()<<8 | Wire.read(); // reading registers: 0x43 (GYRO_XOUT_H) and 0x44 (GYRO_XOUT_L)
-  gyro_y = Wire.read()<<8 | Wire.read(); // reading registers: 0x45 (GYRO_YOUT_H) and 0x46 (GYRO_YOUT_L)
-  gyro_z = Wire.read()<<8 | Wire.read(); // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
-  
-  // print out data
-  Serial.print("aX = "); Serial.print(convert_int16_to_str(accelerometer_x));
-  Serial.print(" | aY = "); Serial.print(convert_int16_to_str(accelerometer_y));
-  Serial.print(" | aZ = "); Serial.print(convert_int16_to_str(accelerometer_z));
-  Serial.print(" | tmp = "); Serial.print(temperature/340.00+36.53);
-  Serial.print(" | gX = "); Serial.print(convert_int16_to_str(gyro_x));
-  Serial.print(" | gY = "); Serial.print(convert_int16_to_str(gyro_y));
-  Serial.print(" | gZ = "); Serial.print(convert_int16_to_str(gyro_z));
+  Serial.print("| aX = "); Serial.print(x_axis);
+  Serial.print(" | aY = "); Serial.print((y_axis));
+  Serial.print(" | aZ = "); Serial.print((z_axis));
+  Serial.print(" Pitch = "); Serial.print((roll));
+  Serial.print(" Roll = "); Serial.print((pitch));
   Serial.println();
   
   // delay
   delay(1000);
-  Gyrovalue=gyro_z;
-  Accvalue=accelerometer_z;
+  
+  Gyrovalue=pitch;
+  Accvalue=z_axis;
   
 if(Accvalue<0)
 {
@@ -80,7 +70,6 @@ if(Accvalue<0)
   Master_BTDevice.print(2);
 }
 
-Gyrovalue=(Gyrovalue-GYROSCOPE_ZERO)*180/(MAX_GYROSCOPE_TILT_VALUE_po-MAX_GYROSCOPE_TILT_VALUE_ne);
 if(Gyrovalue>Some_specific_Angle_at_which_one_turns)
 {
   flag_turns_master=1;    
