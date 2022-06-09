@@ -7,9 +7,9 @@ int x_val;
 int y_val;
 int z_val;
 
-int x_val2=0;//intitialise these values
-int y_val2=0;
-int z_val2=0;
+int x_val2;
+int y_val2;
+int z_val2;
 
 int Gyrovalue;
 int Accvalue;
@@ -30,30 +30,34 @@ void setup()
   pinMode(z, INPUT);
   Serial.begin(9600);
    
+x_val2 = analogRead(x);
+  y_val2 = analogRead(y);
+  z_val2 = analogRead(z);
+  
   Master_BTDevice.begin(38400);
 }
 
 void loop() {
 
 
-   x_val = analogRead(x);
+  x_val = analogRead(x);
   y_val = analogRead(y);
   z_val = analogRead(z);
 
-  int x_axis = x_val - x_val2;
-  int y_axis = y_val - y_val2;
-  int z_axis = z_val - z_val2;
+  int x_adc_value = x_val;
+  int y_adc_value = y_val;
+  int z_adc_value = z_val;
 
-  int x_g_value = ( ( ( (double)(x_axis * 5)/1024) - 1.65 ) / 0.330 ); 
-  int y_g_value = ( ( ( (double)(y_axis * 5)/1024) - 1.65 ) / 0.330 );  
-  int z_g_value = ( ( ( (double)(z_axis * 5)/1024) - 1.80 ) / 0.330 );
+  x_g_value = ( ( ( (double)(x_adc_value * 5)/1024) - 1.65 ) / 0.330 ); /* Acceleration in x-direction in g units */ 
+  y_g_value = ( ( ( (double)(y_adc_value * 5)/1024) - 1.65 ) / 0.330 ); /* Acceleration in y-direction in g units */ 
+  z_g_value = ( ( ( (double)(z_adc_value * 5)/1024) - 1.80 ) / 0.330 ); /* Acceleration in z-direction in g units */ 
 
   int roll = ( ( (atan2(y_g_value,z_g_value) * 180) / 3.14 ) + 180 ); 
   int pitch = ( ( (atan2(z_g_value,x_g_value) * 180) / 3.14 ) + 180 );
   
-  Serial.print("| aX = "); Serial.print(x_axis);
-  Serial.print(" | aY = "); Serial.print((y_axis));
-  Serial.print(" | aZ = "); Serial.print((z_axis));
+  Serial.print("| aX = "); Serial.print(x_adc_value);
+  Serial.print(" | aY = "); Serial.print((y_adc_value));
+  Serial.print(" | aZ = "); Serial.print((z_adc_value));
   Serial.print(" Pitch = "); Serial.print((roll));
   Serial.print(" Roll = "); Serial.print((pitch));
   Serial.println();
