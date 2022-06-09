@@ -7,7 +7,7 @@
 #define LED_LEFT    4
 #define LED_RIGHT   6
 
-#define LED_COUNT 52
+#define LED_COUNT 64
 
 char state = 0;
 int light_delay = 50;
@@ -109,7 +109,7 @@ void leftBlink() {
   }
 }
 void colorBlinkersLeft(uint32_t c, int wait){
-  for(int i = 0; i<=28; i++){
+  for(int i = 0; i<=15; i++){
     strip_left.setPixelColor(i, c);
   }
   for(int i = 16; i<=31; i++){
