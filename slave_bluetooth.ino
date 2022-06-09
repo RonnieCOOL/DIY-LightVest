@@ -83,7 +83,7 @@ void loop()
   }
 }
 void colorBlinkersRight(uint32_t c, int wait){
-  for(int i = 0; i<=28; i++){
+  for(int i = 0; i<=15; i++){
     strip_right.setPixelColor(i, c);
   }
   for(int i = 0; i<=15; i++){
@@ -129,7 +129,7 @@ void stopStop(){
   colorStop(strip_left.Color(255, 0, 0), 2000);
 }
 void colorStop(uint32_t c, int wait){
-  for(int i = 0; i<=28; i++){
+  for(int i = 0; i<=15; i++){
     strip_left.setPixelColor(i, c);
     strip_right.setPixelColor(i, c);
   }
