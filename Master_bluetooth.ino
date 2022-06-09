@@ -41,6 +41,24 @@ void loop() {
 
 
   x_val = analogRead(x);
+
+int Gyrovalue;
+
+int Accvalue;
+
+
+
+int RX_PIN=0;
+
+int TX_PIN=1;
+
+
+
+#include<SoftwareSerial.h>
+
+
+
+SoftwareSerial Master_BTDevice(RX_PIN,TX_PIN);
   y_val = analogRead(y);
   z_val = analogRead(z);
 
@@ -52,21 +70,19 @@ void loop() {
   y_g_value = ( ( ( (double)(y_adc_value * 5)/1024) - 1.65 ) / 0.330 ); /* Acceleration in y-direction in g units */ 
   z_g_value = ( ( ( (double)(z_adc_value * 5)/1024) - 1.80 ) / 0.330 ); /* Acceleration in z-direction in g units */ 
 
-  int roll = ( ( (atan2(y_g_value,z_g_value) * 180) / 3.14 ) + 180 ); 
-  int pitch = ( ( (atan2(z_g_value,x_g_value) * 180) / 3.14 ) + 180 );
+  int yaw =  ( ( (atan2(x_g_value,y_g_value) * 180) / 3.14 ) + 180 );
   
   Serial.print("| aX = "); Serial.print(x_adc_value);
   Serial.print(" | aY = "); Serial.print((y_adc_value));
   Serial.print(" | aZ = "); Serial.print((z_adc_value));
-  Serial.print(" Pitch = "); Serial.print((roll));
-  Serial.print(" Roll = "); Serial.print((pitch));
+  Serial.print(" yaw = "); Serial.print((yaw));
   Serial.println();
   
   // delay
   delay(1000);
   
-  Gyrovalue=pitch;
-  Accvalue=z_axis;
+  Gyrovalue=yaw;
+  Accvalue=x_g_value;
   
 if(Accvalue<0)
 {
