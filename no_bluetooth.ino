@@ -7,7 +7,7 @@
 #define LED_LEFT    4
 #define LED_RIGHT   6
 
-#define LED_COUNT 52
+#define LED_COUNT 64
 
 char state = 0;
 int light_delay = 50;
@@ -57,7 +57,7 @@ void rightBlink() {
   }
 }
 void colorBlinkersRight(uint32_t c, int wait){
-  for(int i = 0; i<=28; i++){
+  for(int i = 0; i<=15; i++){
     strip_right.setPixelColor(i, c);
   }
   for(int i = 0; i<=15; i++){
@@ -83,7 +83,7 @@ void leftBlink() {
   }
 }
 void colorBlinkersLeft(uint32_t c, int wait){
-  for(int i = 0; i<=28; i++){
+  for(int i = 0; i<=15; i++){
     strip_left.setPixelColor(i, c);
   }
   for(int i = 16; i<=31; i++){
@@ -108,7 +108,7 @@ void stopStop(){
   colorStop(strip_left.Color(255, 0, 0), 2000);
 }
 void colorStop(uint32_t c, int wait){
-  for(int i = 0; i<=28; i++){
+  for(int i = 0; i<=15; i++){
     strip_left.setPixelColor(i, c);
     strip_right.setPixelColor(i, c);
   }
@@ -129,9 +129,9 @@ void colorStop(uint32_t c, int wait){
 void hazardBlink(){
   uint32_t c = (255, 100, 0); 
   while(1){
-    for(int i = 0; i<=28; i++){
+    for(int i = 0; i<=16; i++){
       strip_left.setPixelColor(i, c);
-      strip_left.setPixelColor(i, c);
+      strip_right.setPixelColor(i, c);
     }
     for(int i = 0; i<=31; i++){
       strip_back.setPixelColor(i, c);
