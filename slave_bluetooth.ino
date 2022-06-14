@@ -174,7 +174,7 @@ void colorStop(uint32_t c, int wait){
     delay(400);
   }
 }
-void colorBlinkersno(uint32_t c, int wait){
+void colorBlinkno(uint32_t c, int wait){
   for(int i = 0; i<=14; i++){
     strip_left.setPixelColor(i, c);
     strip_right.setPixelColor(i, c);
