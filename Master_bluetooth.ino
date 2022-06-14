@@ -6,13 +6,6 @@ int16_t accelerometer_x, accelerometer_y, accelerometer_z; // variables for acce
 int16_t gyro_x, gyro_y, gyro_z; // variables for gyro raw data
 int16_t temperature; // variables for temperature data
 
-char tmp_str[7]; // temporary variable used in convert function
-
-char* convert_int16_to_str(int16_t i) { // converts int16 to string. Moreover, resulting strings will have the same length in the debug monitor.
-  sprintf(tmp_str, "%6d", i);
-  return tmp_str;
-  }
-
 int MAX_GYROSCOPE_TILT_VALUE_po = 5000; //I'm assuming that both are like positive(right) and negative(left), else we can shift them ig.
 int MAX_GYROSCOPE_TILT_VALUE_ne = -5000;
 int GYROSCOPE_ZERO=0;
